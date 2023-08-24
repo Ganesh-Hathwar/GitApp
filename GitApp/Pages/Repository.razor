@@ -1,0 +1,82 @@
+﻿@page "/repositories"
+@using GitApp.Data
+@using GitApp.Services
+@inject RepositoriesServices RepositoriesService
+@using Microsoft.AspNetCore.Components
+
+<h3>Repositories</h3>
+
+@if (repositories == null)
+{
+    <p>Loading repositories...</p>
+}
+else
+{
+    <ul>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Branchs</th>
+                        <th>Owning team</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var repo in repositories)
+                    {
+                        <tr> <button @onclick="() => NavigateToBranchesData(repo.name)">
+                        <td>@repo.name</td></button>
+                            <td>@repo.BranchCount</td>
+                            <td>@repo.TeamName</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        
+    </ul>
+}
+
+@code {
+    private RepositoryData[] repositories;
+
+    protected override async Task OnInitializedAsync()
+    {
+        var accessToken = "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";
+        repositories = await LoadRepositoryDatas(accessToken);
+    }
+
+    private async Task<RepositoryData[]> LoadRepositoryDatas(string accessToken)
+    {
+        var repositories = await RepositoriesService.GetRepositoriesAsync(accessToken);
+
+        List<RepositoryData> allrepoData = new List<RepositoryData>();
+        foreach (var repo in repositories)
+        {
+            var branchCount = await RepositoriesService.GetRepositoryBranchCountAsync(accessToken, repo.owner.login, repo.name);
+            var teamInfo = await RepositoriesService.GetTeamInfoAsync(accessToken, repo.owner.login, repo.name);
+            var teamName = teamInfo != null ? teamInfo.TeamName : "Team name not available!";
+
+
+            allrepoData.Add(new RepositoryData
+                {
+                    name = repo.name,
+                    BranchCount = branchCount,
+                    TeamName = teamName
+                });
+        }
+        return allrepoData.ToArray();
+    }
+
+
+    //private async Task<RepositoryData> GetRepositoriesAsync(string accessToken){
+
+    //}
+
+    private void NavigateToBranchesData(string repoName)
+    {
+        NavigationManager.NavigateTo($"branchesData/{repoName}");
+    }
+
+    [Inject]
+    private NavigationManager NavigationManager { get; set; }
+}

@@ -1,0 +1,49 @@
+﻿@page "/stale-branches"
+@using GitApp.Interface
+@using System.Collections.Generic
+@using System.Threading.Tasks
+@inject IGitHubStaleBranches staleBranchesService
+
+<h3>Stale Branches in All Repositories</h3>
+
+@if (staleBranches != null && staleBranches.Any())
+{
+    <ul>
+        @foreach (var branch in staleBranches)
+        {
+            <li>@branch</li>
+        }
+    </ul>
+}
+else
+{
+    <p>No stale branches found in any repository.</p>
+}
+
+@code {
+    private List<string> staleBranches;
+
+    [Inject]
+    private IGitHubStaleBranches gitHubService { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        await GetStaleBranches();
+    }
+
+    private async Task GetStaleBranches()
+    {
+        try
+        {
+            var githubToken = "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";
+            var repositoryOwner = "Ganesh-Hathwar";
+            var repositoryName = "Web-Api";
+
+            staleBranches = await gitHubService.GetStaleBranches(githubToken, repositoryOwner, repositoryName);
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"An error occurred: {ex.Message}");
+        }
+    }
+}

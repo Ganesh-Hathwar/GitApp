@@ -1,0 +1,18 @@
+﻿@using GitApp.Services;
+@page "/token"
+
+@inject TokenService TokenService
+
+<h3>Token Status</h3>
+<p>@tokenStatus</p>
+
+@code {
+    private string tokenStatus = "Token status: ";
+
+    protected override async Task OnInitializedAsync()
+    {
+        string token = await TokenService.GetTokenAsync();
+
+        tokenStatus += "Token obtained: " + token;
+    }
+}

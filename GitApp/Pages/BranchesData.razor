@@ -1,0 +1,79 @@
+﻿@page "/branchesData/{RepoName}"
+@using GitApp.Data
+@using GitApp.Services
+@inject BranchDataServices BranchDataServices
+@using Microsoft.AspNetCore.Components
+
+<h3>Branches Data for @RepoName</h3>
+
+
+@if (branches == null)
+{
+    <p>Loading...</p>
+}
+else if (branches.Length == 0)
+{
+    <p>No branches found.</p>
+}
+else
+{
+    <table>
+        <thead>
+            <tr>
+                <th>Branch Name</th>
+                <th>Number of Commits</th>
+                <th>Build Status</th>
+            </tr>
+        </thead
+        <tbody>
+            @foreach (var branch in branches)
+            {
+                <tr>
+                    <td>@branch.BranchName</td>
+                    <td>@branch.CommitCount</td>
+                    <td>@branch.BuildStatus</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+@code {
+    private BranchInfo[] branches;
+    protected override async Task OnInitializedAsync()
+    {
+        var accessToken = "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";
+        branches = await LoadBranchesAsync(accessToken);
+    }
+
+    [Parameter]
+    public string RepoName { get; set; }
+
+    private async Task<BranchInfo[]> LoadBranchesAsync(string accessToken)
+    {
+        var repositories = await BranchDataServices.GetRepositoriesAsync(accessToken);
+
+        List<BranchInfo> allBranches = new List<BranchInfo>();
+        foreach (var repo in repositories)
+        {
+            if (repo.name == RepoName)
+            {
+                var repoBranches = await BranchDataServices.GetRepositoryBranchesAsync(accessToken, repo.owner.login, RepoName);
+                foreach (var branch in repoBranches)
+                {
+                    var commitCount = await BranchDataServices.GetBranchCommitCountAsync(accessToken, repo.owner.login, RepoName, branch.name);
+                    var buildStatus = await BranchDataServices.GetBranchBuildStatusAsync(accessToken, repo.owner.login, RepoName, branch.name);
+
+                    allBranches.Add(new BranchInfo
+                        {
+                            BranchName = branch.name,
+                            CommitCount = commitCount,
+                            BuildStatus = buildStatus
+                        });
+                }
+                break; 
+            }
+        }
+        return allBranches.ToArray();
+    }
+}
