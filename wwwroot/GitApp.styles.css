@@ -1,0 +1,168 @@
+/* _content/GitApp/Pages/Branches.razor.rz.scp.css */
+th[b-oz3lfmoy4e], td[b-oz3lfmoy4e] {
+    padding: 15px;
+}
+/* _content/GitApp/Pages/BranchesData.razor.rz.scp.css */
+th[b-3obo5pbv9j], td[b-3obo5pbv9j] {
+    padding: 15px;
+}
+/* _content/GitApp/Pages/Repository.razor.rz.scp.css */
+button[b-dc0gwm0bj6]{
+    width : 350px;
+    height : 50px;
+    border-radius : 5%;
+    margin : 10px;
+    display : flex;
+    flex-direction : row;
+    text-decoration : none;
+    border : none;
+    justify-content : center;
+    align-content : center;
+}
+li[b-dc0gwm0bj6] {
+    font-size: medium;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    margin: auto;
+    width: 50%;
+    border: 3px solid green;
+    padding: 10px;
+    border : none;
+    list-style-type : none;
+}
+th[b-dc0gwm0bj6], td[b-dc0gwm0bj6] {
+    padding: 15px;
+}
+/* _content/GitApp/Shared/MainLayout.razor.rz.scp.css */
+.page[b-8z6u20rwsp] {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+}
+
+main[b-8z6u20rwsp] {
+    flex: 1;
+}
+
+.sidebar[b-8z6u20rwsp] {
+    background-image: linear-gradient(180deg, rgb(5, 39, 103) 0%, #3a0647 70%);
+}
+
+.top-row[b-8z6u20rwsp] {
+    background-color: #f7f7f7;
+    border-bottom: 1px solid #d6d5d5;
+    justify-content: flex-end;
+    height: 3.5rem;
+    display: flex;
+    align-items: center;
+}
+
+    .top-row[b-8z6u20rwsp]  a, .top-row .btn-link[b-8z6u20rwsp] {
+        white-space: nowrap;
+        margin-left: 1.5rem;
+    }
+
+    .top-row a:first-child[b-8z6u20rwsp] {
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
+@media (max-width: 640.98px) {
+    .top-row:not(.auth)[b-8z6u20rwsp] {
+        display: none;
+    }
+
+    .top-row.auth[b-8z6u20rwsp] {
+        justify-content: space-between;
+    }
+
+    .top-row a[b-8z6u20rwsp], .top-row .btn-link[b-8z6u20rwsp] {
+        margin-left: 0;
+    }
+}
+
+@media (min-width: 641px) {
+    .page[b-8z6u20rwsp] {
+        flex-direction: row;
+    }
+
+    .sidebar[b-8z6u20rwsp] {
+        width: 250px;
+        height: 100vh;
+        position: sticky;
+        top: 0;
+    }
+
+    .top-row[b-8z6u20rwsp] {
+        position: sticky;
+        top: 0;
+        z-index: 1;
+    }
+
+    .top-row[b-8z6u20rwsp], article[b-8z6u20rwsp] {
+        padding-left: 2rem !important;
+        padding-right: 1.5rem !important;
+    }
+}
+/* _content/GitApp/Shared/NavMenu.razor.rz.scp.css */
+.navbar-toggler[b-qc46bpk3s3] {
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+.top-row[b-qc46bpk3s3] {
+    height: 3.5rem;
+    background-color: rgba(0,0,0,0.4);
+}
+
+.navbar-brand[b-qc46bpk3s3] {
+    font-size: 1.1rem;
+}
+
+.oi[b-qc46bpk3s3] {
+    width: 2rem;
+    font-size: 1.1rem;
+    vertical-align: text-top;
+    top: -2px;
+}
+
+.nav-item[b-qc46bpk3s3] {
+    font-size: 0.9rem;
+    padding-bottom: 0.5rem;
+}
+
+    .nav-item:first-of-type[b-qc46bpk3s3] {
+        padding-top: 1rem;
+    }
+
+    .nav-item:last-of-type[b-qc46bpk3s3] {
+        padding-bottom: 1rem;
+    }
+
+    .nav-item[b-qc46bpk3s3]  a {
+        color: #d7d7d7;
+        border-radius: 4px;
+        height: 3rem;
+        display: flex;
+        align-items: center;
+        line-height: 3rem;
+    }
+
+.nav-item[b-qc46bpk3s3]  a.active {
+    background-color: rgba(255,255,255,0.25);
+    color: white;
+}
+
+.nav-item[b-qc46bpk3s3]  a:hover {
+    background-color: rgba(255,255,255,0.1);
+    color: white;
+}
+
+@media (min-width: 641px) {
+    .navbar-toggler[b-qc46bpk3s3] {
+        display: none;
+    }
+
+    .collapse[b-qc46bpk3s3] {
+        /* Never collapse the sidebar for wide screens */
+        display: block;
+    }
+}
